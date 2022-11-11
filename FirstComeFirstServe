@@ -1,0 +1,93 @@
+public class FirstComeFirstServe {
+
+
+    protected static int[] processes;
+
+    // Function to find the waiting time for all
+        // processes
+        public static void findWaitingTime(int[] processes, int n, int[] bt, int[] wt) {
+            FirstComeFirstServe.processes = processes;
+            // waiting time for first process is 0
+            wt[0] = 0;
+
+            // calculating waiting time
+            for (int i = 1; i < n ; i++)
+                wt[i] = bt[i - 1] + wt[i - 1];
+        }
+
+        // Function to calculate turn around time
+        public static void findTurnAroundTime(int[] processes, int n, int[] bt, int[] wt, int[] tat) {
+            FirstComeFirstServe.processes = processes;
+            // calculating turnaround time by adding
+            // bt[i] + wt[i]
+            for (int i = 0; i < n ; i++)
+                tat[i] = bt[i] + wt[i];
+        }
+
+        //Function to calculate average time
+        public static void findavgTime(int[] processes, int n, int[] bt) {
+            int[] wt = new int[n];
+            int[] tat = new int[n];
+            int total_wt = 0;
+            int total_tat = 0;
+
+            //Function to find waiting time of all processes
+            findWaitingTime(processes, n, bt, wt);
+
+            //Function to find turn around time for all processes
+            findTurnAroundTime(processes, n, bt, wt, tat);
+
+            //Display processes along with all details
+            System.out.print("Processes  ");
+            System.out.print("");
+            System.out.print("Burst  ");
+            System.out.print("");
+            System.out.print(" Waiting time  ");
+            System.out.print("");
+            System.out.print(" Turn around time\n");
+
+            // Calculate total waiting time and total turn
+            // around time
+            for (int i = 0; i < n; i++) {
+                total_wt = total_wt + wt[i];
+                total_tat = total_tat + tat[i];
+                System.out.print("  ");
+                System.out.print(i + 1);
+                System.out.print("  ");
+                System.out.print("\t\t");
+                System.out.print("   ");
+                System.out.print(bt[i]);
+                System.out.print("  ");
+                System.out.print("\t   ");
+                System.out.print(wt[i]);
+                System.out.print("  ");
+                System.out.print("\t\t   ");
+                System.out.print("  ");
+                System.out.print(tat[i]);
+                System.out.print("  ");
+                System.out.print("\n");
+
+            }
+
+            System.out.print("Average waiting time = ");
+            System.out.print((float)total_wt / (float)n);
+            System.out.print("\nAverage turn around time = ");
+            System.out.print((float)total_tat / (float)n);
+
+
+        }
+
+        // Driver code
+        public static void main(String[] args) {
+            //process id's
+            int[] processes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+            /* : int n = sizeof processes / sizeof processes[0]; */
+            int n = processes.length;
+
+            //Burst time of all processes
+            int[] burst_time = {10, 5, 8, 2, 4, 6, 7, 8, 9, 12};
+
+            findavgTime(processes, n, burst_time);
+        }
+
+}
